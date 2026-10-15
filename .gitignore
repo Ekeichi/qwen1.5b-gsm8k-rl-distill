@@ -1,0 +1,16 @@
+# environnement
+.venv/
+__pycache__/
+*.pyc
+
+# poids des modeles et checkpoints (plusieurs Go)
+outputs/
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# divers
+.ipynb_checkpoints/
+.DS_Store
+nohup.out

@@ -1,0 +1,100 @@
+nohup: ignoring input
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+27799 exemples utilisables sur 27799
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:  51%|█████     | 171/338 [00:00<00:00, 1687.64it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 1702.42it/s]
+dtype des poids : torch.float32 | attention : eager
+870 steps, batch effectif 64, lr 5e-06
+step 1/870 | loss 0.1820 | grad_norm 2.84 | lr 2.50e-07 | 4s
+step 2/870 | loss 0.1905 | grad_norm 3.16 | lr 5.00e-07 | 7s
+step 3/870 | loss 0.1680 | grad_norm 2.96 | lr 7.50e-07 | 10s
+step 10/870 | loss 0.1753 | grad_norm 2.74 | lr 2.50e-06 | 30s
+step 20/870 | loss 0.1539 | grad_norm 1.40 | lr 5.00e-06 | 60s
+step 30/870 | loss 0.1469 | grad_norm 1.24 | lr 5.00e-06 | 89s
+step 40/870 | loss 0.1442 | grad_norm 0.86 | lr 4.99e-06 | 119s
+step 50/870 | loss 0.1452 | grad_norm 0.85 | lr 4.99e-06 | 149s
+step 60/870 | loss 0.1432 | grad_norm 0.82 | lr 4.98e-06 | 179s
+step 70/870 | loss 0.1418 | grad_norm 0.81 | lr 4.96e-06 | 209s
+step 80/870 | loss 0.1422 | grad_norm 0.77 | lr 4.95e-06 | 238s
+step 90/870 | loss 0.1374 | grad_norm 0.80 | lr 4.93e-06 | 267s
+step 100/870 | loss 0.1348 | grad_norm 0.79 | lr 4.90e-06 | 297s
+step 110/870 | loss 0.1337 | grad_norm 0.77 | lr 4.88e-06 | 326s
+step 120/870 | loss 0.1377 | grad_norm 0.85 | lr 4.85e-06 | 355s
+step 130/870 | loss 0.1362 | grad_norm 0.78 | lr 4.82e-06 | 385s
+step 140/870 | loss 0.1377 | grad_norm 0.81 | lr 4.79e-06 | 414s
+step 150/870 | loss 0.1333 | grad_norm 0.75 | lr 4.75e-06 | 444s
+step 160/870 | loss 0.1402 | grad_norm 0.81 | lr 4.71e-06 | 474s
+step 170/870 | loss 0.1355 | grad_norm 0.74 | lr 4.67e-06 | 504s
+step 180/870 | loss 0.1356 | grad_norm 0.78 | lr 4.62e-06 | 534s
+step 190/870 | loss 0.1342 | grad_norm 0.76 | lr 4.58e-06 | 563s
+step 200/870 | loss 0.1362 | grad_norm 0.69 | lr 4.53e-06 | 593s
+step 210/870 | loss 0.1329 | grad_norm 0.77 | lr 4.47e-06 | 622s
+step 220/870 | loss 0.1314 | grad_norm 0.82 | lr 4.42e-06 | 651s
+step 230/870 | loss 0.1313 | grad_norm 0.78 | lr 4.36e-06 | 681s
+step 240/870 | loss 0.1301 | grad_norm 0.85 | lr 4.30e-06 | 710s
+step 250/870 | loss 0.1276 | grad_norm 0.79 | lr 4.24e-06 | 740s
+step 260/870 | loss 0.1312 | grad_norm 0.78 | lr 4.18e-06 | 770s
+step 270/870 | loss 0.1337 | grad_norm 0.75 | lr 4.11e-06 | 799s
+step 280/870 | loss 0.1348 | grad_norm 0.85 | lr 4.05e-06 | 828s
+step 290/870 | loss 0.1312 | grad_norm 0.72 | lr 3.98e-06 | 857s
+step 300/870 | loss 0.1342 | grad_norm 0.70 | lr 3.91e-06 | 887s
+step 310/870 | loss 0.1320 | grad_norm 0.85 | lr 3.83e-06 | 917s
+step 320/870 | loss 0.1270 | grad_norm 0.78 | lr 3.76e-06 | 946s
+step 330/870 | loss 0.1313 | grad_norm 0.77 | lr 3.69e-06 | 977s
+step 340/870 | loss 0.1351 | grad_norm 0.76 | lr 3.61e-06 | 1006s
+step 350/870 | loss 0.1312 | grad_norm 0.79 | lr 3.53e-06 | 1036s
+step 360/870 | loss 0.1278 | grad_norm 0.76 | lr 3.45e-06 | 1066s
+step 370/870 | loss 0.1292 | grad_norm 0.82 | lr 3.37e-06 | 1095s
+step 380/870 | loss 0.1287 | grad_norm 0.77 | lr 3.29e-06 | 1124s
+step 390/870 | loss 0.1288 | grad_norm 0.71 | lr 3.21e-06 | 1154s
+step 400/870 | loss 0.1275 | grad_norm 0.77 | lr 3.13e-06 | 1184s
+step 410/870 | loss 0.1237 | grad_norm 0.77 | lr 3.05e-06 | 1213s
+step 420/870 | loss 0.1257 | grad_norm 0.77 | lr 2.97e-06 | 1242s
+step 430/870 | loss 0.1208 | grad_norm 0.83 | lr 2.88e-06 | 1271s
+step 440/870 | loss 0.1184 | grad_norm 0.72 | lr 2.80e-06 | 1300s
+step 450/870 | loss 0.1029 | grad_norm 0.72 | lr 2.72e-06 | 1329s
+step 460/870 | loss 0.1030 | grad_norm 0.72 | lr 2.63e-06 | 1359s
+step 470/870 | loss 0.1015 | grad_norm 0.77 | lr 2.55e-06 | 1388s
+step 480/870 | loss 0.1039 | grad_norm 0.78 | lr 2.47e-06 | 1418s
+step 490/870 | loss 0.1016 | grad_norm 0.75 | lr 2.39e-06 | 1448s
+step 500/870 | loss 0.1018 | grad_norm 0.80 | lr 2.30e-06 | 1477s
+step 510/870 | loss 0.1004 | grad_norm 0.77 | lr 2.22e-06 | 1507s
+step 520/870 | loss 0.1026 | grad_norm 0.80 | lr 2.14e-06 | 1537s
+step 530/870 | loss 0.1024 | grad_norm 0.78 | lr 2.06e-06 | 1567s
+step 540/870 | loss 0.1020 | grad_norm 0.83 | lr 1.98e-06 | 1596s
+step 550/870 | loss 0.1025 | grad_norm 0.75 | lr 1.91e-06 | 1626s
+step 560/870 | loss 0.1024 | grad_norm 0.79 | lr 1.83e-06 | 1655s
+step 570/870 | loss 0.1059 | grad_norm 0.80 | lr 1.75e-06 | 1684s
+step 580/870 | loss 0.1025 | grad_norm 0.77 | lr 1.68e-06 | 1714s
+step 590/870 | loss 0.1018 | grad_norm 0.77 | lr 1.61e-06 | 1744s
+step 600/870 | loss 0.1016 | grad_norm 0.75 | lr 1.54e-06 | 1773s
+step 610/870 | loss 0.1024 | grad_norm 0.74 | lr 1.47e-06 | 1803s
+step 620/870 | loss 0.1020 | grad_norm 0.75 | lr 1.40e-06 | 1833s
+step 630/870 | loss 0.1005 | grad_norm 0.82 | lr 1.34e-06 | 1862s
+step 640/870 | loss 0.1020 | grad_norm 0.78 | lr 1.27e-06 | 1892s
+step 650/870 | loss 0.1037 | grad_norm 0.79 | lr 1.21e-06 | 1922s
+step 660/870 | loss 0.1007 | grad_norm 0.75 | lr 1.15e-06 | 1952s
+step 670/870 | loss 0.1021 | grad_norm 0.77 | lr 1.09e-06 | 1982s
+step 680/870 | loss 0.1020 | grad_norm 0.79 | lr 1.04e-06 | 2010s
+step 690/870 | loss 0.1037 | grad_norm 0.72 | lr 9.85e-07 | 2040s
+step 700/870 | loss 0.1024 | grad_norm 0.76 | lr 9.35e-07 | 2070s
+step 710/870 | loss 0.1001 | grad_norm 0.75 | lr 8.87e-07 | 2099s
+step 720/870 | loss 0.0988 | grad_norm 0.76 | lr 8.41e-07 | 2128s
+step 730/870 | loss 0.1009 | grad_norm 0.78 | lr 7.99e-07 | 2157s
+step 740/870 | loss 0.1015 | grad_norm 0.78 | lr 7.59e-07 | 2187s
+step 750/870 | loss 0.1031 | grad_norm 0.78 | lr 7.21e-07 | 2217s
+step 760/870 | loss 0.0996 | grad_norm 0.76 | lr 6.87e-07 | 2246s
+step 770/870 | loss 0.1021 | grad_norm 0.79 | lr 6.55e-07 | 2275s
+step 780/870 | loss 0.1036 | grad_norm 0.75 | lr 6.26e-07 | 2305s
+step 790/870 | loss 0.0996 | grad_norm 0.74 | lr 6.00e-07 | 2334s
+step 800/870 | loss 0.0997 | grad_norm 0.76 | lr 5.77e-07 | 2364s
+step 810/870 | loss 0.1040 | grad_norm 0.76 | lr 5.57e-07 | 2393s
+step 820/870 | loss 0.1031 | grad_norm 0.72 | lr 5.40e-07 | 2423s
+step 830/870 | loss 0.0993 | grad_norm 0.75 | lr 5.26e-07 | 2453s
+step 840/870 | loss 0.1012 | grad_norm 0.77 | lr 5.15e-07 | 2482s
+step 850/870 | loss 0.1018 | grad_norm 0.77 | lr 5.07e-07 | 2512s
+step 860/870 | loss 0.0999 | grad_norm 0.74 | lr 5.02e-07 | 2541s
+step 870/870 | loss 0.1058 | grad_norm 1.27 | lr 5.00e-07 | 2570s
+termine : 870 steps, 0 pas ignores
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:03<00:00,  3.57s/it]Writing model shards: 100%|██████████| 1/1 [00:03<00:00,  3.57s/it]
+modele sauvegarde dans outputs/sft_distill

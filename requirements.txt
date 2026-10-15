@@ -1,0 +1,8 @@
+# versions utilisees pour les resultats du README (Python 3.12, H100, driver CUDA 13)
+torch==2.13.0
+vllm==0.31.0
+transformers==5.17.0
+trl==1.15.0
+datasets==5.1.0
+accelerate==1.15.0
+tensorboard==2.21.0

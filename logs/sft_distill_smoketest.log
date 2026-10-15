@@ -1,0 +1,13 @@
+nohup: ignoring input
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+27799 exemples utilisables sur 27799
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:  40%|███▉      | 135/338 [00:00<00:00, 1340.00it/s]Loading weights:  90%|████████▉ | 304/338 [00:00<00:00, 1536.44it/s]Loading weights: 100%|██████████| 338/338 [00:00<00:00, 1553.62it/s]
+dtype des poids : torch.float32 | attention : sdpa
+5 steps, batch effectif 64, lr 1e-05
+step 1/5 | loss 0.1553 | grad_norm 1.73 | lr 5.00e-07 | 5s
+step 2/5 | loss 0.1634 | grad_norm 1.72 | lr 1.00e-06 | 9s
+step 3/5 | loss 0.1442 | grad_norm 1.69 | lr 1.50e-06 | 13s
+step 5/5 | loss 0.1549 | grad_norm 1.22 | lr 2.50e-06 | 20s
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:03<00:00,  3.56s/it]Writing model shards: 100%|██████████| 1/1 [00:03<00:00,  3.56s/it]
+modele sauvegarde dans outputs/sft_test

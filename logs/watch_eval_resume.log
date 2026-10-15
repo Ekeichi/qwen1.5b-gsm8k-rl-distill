@@ -1,0 +1,23 @@
+nohup: ignoring input
+[16:09] eval ckpt300 (gpu_mem=0.10)
+modele       greedy   pass@1   maj@16   gain pass@1 vs baseline (IC95)  
+------------------------------------------------------------------------
+baseline      74.22    73.15    83.85   -                               
+ckpt100       75.28    74.05    82.34   +0.90 pts (+-0.70)              
+ckpt200       75.06    75.32    82.49   +2.17 pts (+-0.81)              
+ckpt300       77.48    76.73    83.62   +3.58 pts (+-0.86)              
+
+Lecture : un gain est reel si l'intervalle (+-) n'inclut pas 0.
+Le greedy vLLM varie d'environ +-0.2 pt d'un run a l'autre sur le meme modele.
+[16:36] eval ckpt400 (gpu_mem=0.10)
+modele       greedy   pass@1   maj@16   gain pass@1 vs baseline (IC95)  
+------------------------------------------------------------------------
+baseline      74.22    73.15    83.85   -                               
+ckpt100       75.28    74.05    82.34   +0.90 pts (+-0.70)              
+ckpt200       75.06    75.32    82.49   +2.17 pts (+-0.81)              
+ckpt300       77.48    76.73    83.62   +3.58 pts (+-0.86)              
+ckpt400       77.79    77.26    83.40   +4.11 pts (+-0.89)              
+
+Lecture : un gain est reel si l'intervalle (+-) n'inclut pas 0.
+Le greedy vLLM varie d'environ +-0.2 pt d'un run a l'autre sur le meme modele.
+[16:51] eval final (gpu_mem=0.40)
