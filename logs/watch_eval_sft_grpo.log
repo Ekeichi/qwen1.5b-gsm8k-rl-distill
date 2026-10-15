@@ -1,0 +1,81 @@
+[07:37] eval sft_grpo100 (gpu_mem=0.10)
+modele            greedy   pass@1   maj@16   gain pass@1 vs baseline (IC95)  
+-----------------------------------------------------------------------------
+baseline           74.22    73.15    83.85   -                               
+ckpt100            75.28    74.05    82.34   +0.90 pts (+-0.70)              
+ckpt200            75.06    75.32    82.49   +2.17 pts (+-0.81)              
+ckpt300            77.48    76.73    83.62   +3.58 pts (+-0.86)              
+ckpt400            77.79    77.26    83.40   +4.11 pts (+-0.89)              
+final              77.63    77.55    83.70   +4.40 pts (+-0.95)              
+sft                77.48    76.93    84.99   +3.78 pts (+-0.81)              
+sft_grpo100        77.71    77.40    85.06   +4.25 pts (+-0.86)              
+
+Lecture : un gain est reel si l'intervalle (+-) n'inclut pas 0.
+Le greedy vLLM varie d'environ +-0.2 pt d'un run a l'autre sur le meme modele.
+[08:05] eval sft_grpo200 (gpu_mem=0.10)
+modele            greedy   pass@1   maj@16   gain pass@1 vs baseline (IC95)  
+-----------------------------------------------------------------------------
+baseline           74.22    73.15    83.85   -                               
+ckpt100            75.28    74.05    82.34   +0.90 pts (+-0.70)              
+ckpt200            75.06    75.32    82.49   +2.17 pts (+-0.81)              
+ckpt300            77.48    76.73    83.62   +3.58 pts (+-0.86)              
+ckpt400            77.79    77.26    83.40   +4.11 pts (+-0.89)              
+final              77.63    77.55    83.70   +4.40 pts (+-0.95)              
+sft                77.48    76.93    84.99   +3.78 pts (+-0.81)              
+sft_grpo100        77.71    77.40    85.06   +4.25 pts (+-0.86)              
+sft_grpo200        78.39    77.98    85.22   +4.82 pts (+-0.92)              
+
+Lecture : un gain est reel si l'intervalle (+-) n'inclut pas 0.
+Le greedy vLLM varie d'environ +-0.2 pt d'un run a l'autre sur le meme modele.
+[08:33] eval sft_grpo300 (gpu_mem=0.10)
+modele            greedy   pass@1   maj@16   gain pass@1 vs baseline (IC95)  
+-----------------------------------------------------------------------------
+baseline           74.22    73.15    83.85   -                               
+ckpt100            75.28    74.05    82.34   +0.90 pts (+-0.70)              
+ckpt200            75.06    75.32    82.49   +2.17 pts (+-0.81)              
+ckpt300            77.48    76.73    83.62   +3.58 pts (+-0.86)              
+ckpt400            77.79    77.26    83.40   +4.11 pts (+-0.89)              
+final              77.63    77.55    83.70   +4.40 pts (+-0.95)              
+sft                77.48    76.93    84.99   +3.78 pts (+-0.81)              
+sft_grpo100        77.71    77.40    85.06   +4.25 pts (+-0.86)              
+sft_grpo200        78.39    77.98    85.22   +4.82 pts (+-0.92)              
+sft_grpo300        78.92    77.97    84.23   +4.82 pts (+-0.94)              
+
+Lecture : un gain est reel si l'intervalle (+-) n'inclut pas 0.
+Le greedy vLLM varie d'environ +-0.2 pt d'un run a l'autre sur le meme modele.
+[09:00] eval sft_grpo400 (gpu_mem=0.10)
+modele            greedy   pass@1   maj@16   gain pass@1 vs baseline (IC95)  
+-----------------------------------------------------------------------------
+baseline           74.22    73.15    83.85   -                               
+ckpt100            75.28    74.05    82.34   +0.90 pts (+-0.70)              
+ckpt200            75.06    75.32    82.49   +2.17 pts (+-0.81)              
+ckpt300            77.48    76.73    83.62   +3.58 pts (+-0.86)              
+ckpt400            77.79    77.26    83.40   +4.11 pts (+-0.89)              
+final              77.63    77.55    83.70   +4.40 pts (+-0.95)              
+sft                77.48    76.93    84.99   +3.78 pts (+-0.81)              
+sft_grpo100        77.71    77.40    85.06   +4.25 pts (+-0.86)              
+sft_grpo200        78.39    77.98    85.22   +4.82 pts (+-0.92)              
+sft_grpo300        78.92    77.97    84.23   +4.82 pts (+-0.94)              
+sft_grpo400        78.01    78.14    83.47   +4.98 pts (+-0.96)              
+
+Lecture : un gain est reel si l'intervalle (+-) n'inclut pas 0.
+Le greedy vLLM varie d'environ +-0.2 pt d'un run a l'autre sur le meme modele.
+[09:18] eval sft_grpo_final (gpu_mem=0.40)
+modele            greedy   pass@1   maj@16   gain pass@1 vs baseline (IC95)  
+-----------------------------------------------------------------------------
+baseline           74.22    73.15    83.85   -                               
+ckpt100            75.28    74.05    82.34   +0.90 pts (+-0.70)              
+ckpt200            75.06    75.32    82.49   +2.17 pts (+-0.81)              
+ckpt300            77.48    76.73    83.62   +3.58 pts (+-0.86)              
+ckpt400            77.79    77.26    83.40   +4.11 pts (+-0.89)              
+final              77.63    77.55    83.70   +4.40 pts (+-0.95)              
+sft                77.48    76.93    84.99   +3.78 pts (+-0.81)              
+sft_grpo100        77.71    77.40    85.06   +4.25 pts (+-0.86)              
+sft_grpo200        78.39    77.98    85.22   +4.82 pts (+-0.92)              
+sft_grpo300        78.92    77.97    84.23   +4.82 pts (+-0.94)              
+sft_grpo400        78.01    78.14    83.47   +4.98 pts (+-0.96)              
+sft_grpo_final     78.77    78.63    83.85   +5.48 pts (+-1.00)              
+
+Lecture : un gain est reel si l'intervalle (+-) n'inclut pas 0.
+Le greedy vLLM varie d'environ +-0.2 pt d'un run a l'autre sur le meme modele.
+[09:22] termine

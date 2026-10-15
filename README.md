@@ -4,6 +4,7 @@ Deux façons d'améliorer un petit modèle (Qwen2.5-1.5B-Instruct) en raisonneme
 
 1. **GRPO** (apprentissage par renforcement, TRL) avec une récompense binaire « bonne réponse dans `\boxed{}` ».
 2. **Distillation** : SFT sur des solutions correctes générées par un professeur (Qwen2.5-7B-Instruct, rejection sampling).
+3. **Distillation puis GRPO** : le même GRPO, en partant du modèle distillé.
 
 Tout a été entraîné et évalué sur une seule H100 80 Go.
 
@@ -18,16 +19,29 @@ Tout a été entraîné et évalué sur une seule H100 80 Go.
 | GRPO step 400 | 77.79 | 77.26 | 83.40 | +4.11 (± 0.89) |
 | **GRPO final (448 steps)** | 77.63 | **77.55** | 83.70 | **+4.40 (± 0.95)** |
 | SFT distillation | 77.48 | 76.93 | 84.99 | +3.78 (± 0.81) |
-| SFT + GRPO step 100 *(run en cours au 15/10)* | 77.71 | 77.40 | **85.06** | +4.25 (± 0.86) |
+| SFT + GRPO step 100 | 77.71 | 77.40 | 85.06 | +4.25 (± 0.86) |
+| SFT + GRPO step 200 | 78.39 | 77.98 | **85.22** | +4.82 (± 0.92) |
+| SFT + GRPO step 300 | **78.92** | 77.97 | 84.23 | +4.82 (± 0.94) |
+| SFT + GRPO step 400 | 78.01 | 78.14 | 83.47 | +4.98 (± 0.96) |
+| **SFT + GRPO final (448 steps)** | 78.77 | **78.63** | 83.85 | **+5.48 (± 1.00)** |
 
 - **greedy** : 1 génération à température 0.
 - **pass@1** : précision moyenne sur 16 tirages (T = 0.7, top_p = 0.95).
 - **maj@16** : vote majoritaire sur ces 16 tirages.
 - **IC 95 %** : différence appariée question par question (pass@1 sur 16 tirages) ; un gain est significatif si l'intervalle n'inclut pas 0. Le greedy vLLM varie d'environ ± 0.2 pt d'un run à l'autre.
 
-Les lignes suivantes du run SFT + GRPO (steps 200 à final) s'ajoutent automatiquement à `results/summary.txt` (`python src/compare.py`).
+Comparaisons appariées (question par question) du modèle SFT + GRPO final :
 
-**À retenir.** Les deux méthodes gagnent environ +4 pts en pass@1. GRPO améliore la réponse « du premier coup » mais pas le maj@16 (probablement parce qu'il réduit la diversité des tirages : l'entropie tombe à ~0.07 en fin d'entraînement) ; la distillation donne le meilleur maj@16 (+1.1 pt, écart non testé statistiquement).
+| comparé à | pass@1 | maj@16 (corrigées / cassées) |
+|---|---|---|
+| SFT | **+1.70 (± 0.79)** | 38 / 53 (McNemar p = 0.14) |
+| GRPO seul, final | +1.08 (± 1.10) | 61 / 59 (p = 0.93) |
+
+**À retenir.**
+- **Distillation puis GRPO est la meilleure chaîne** : 78.63 en pass@1, +5.5 pts sur la baseline. Le GRPO ajoute +1.7 pt (significatif) au modèle distillé ; l'écart avec le GRPO seul (+1.1 pt) est à la limite de la significativité.
+- GRPO seul et distillation seule gagnent chacun environ +4 pts en pass@1.
+- **GRPO n'améliore pas le maj@16** : le GRPO seul le laisse au niveau de la baseline, et sur le modèle distillé il monte jusqu'au step 200 (85.22) puis redescend (83.47 au step 400, dégradation significative vs SFT, p = 0.03). C'est cohérent avec l'effondrement de l'entropie (voir Diagnostic) : GRPO rend chaque tirage plus fiable mais moins divers. La distillation donne le meilleur maj@16.
+- En pratique : le modèle final pour une réponse unique, le step 200 pour du vote majoritaire (ses poids n'ont pas été conservés, `--save_total_limit 1`).
 
 Tableau brut : [`results/summary.txt`](results/summary.txt), régénérable avec `python src/compare.py`.
 
@@ -122,7 +136,7 @@ Récompense GRPO : 1.0 si le dernier `\boxed{}` vaut la bonne réponse, + 0.1 si
 - **GRPO run 1** (`logs/train_grpo_run1.log`) : s'est arrêté au step 300, disque plein lors de la sauvegarde. Les checkpoints 100 et 200 ont été évalués.
 - **GRPO run 2** (`logs/train_grpo_run2_resume.log`) : reprise depuis `checkpoint-200`. Ce checkpoint avait été sauvé avec `save_only_model` (sans état d'optimiseur) : la reprise a gardé les poids et le compteur de steps, mais **Adam et le scheduler sont repartis de zéro**. Les résultats step 300, 400 et final viennent de ce run.
 - **SFT** : un test de 5 steps (`logs/sft_distill_smoketest.log`) puis l'entraînement complet (`logs/sft_distill.log`, 0 pas ignoré).
-- **SFT + GRPO** (`logs/train_grpo_sft.log`, lancé le 15/10) : mêmes hyperparamètres que le GRPO seul, départ `outputs/sft_distill`, `--save_total_limit 1` (disque partagé). Checkpoints évalués au fil de l'eau par `scripts/watch_eval_run.sh` (résultats `results/eval/sft_grpo*`).
+- **SFT + GRPO** (`logs/train_grpo_sft.log`, 15/10, 448 steps en 2 h 02, sans incident) : mêmes hyperparamètres que le GRPO seul, départ `outputs/sft_distill`, `--save_total_limit 1` (disque partagé). Checkpoints évalués au fil de l'eau par `scripts/watch_eval_run.sh` (résultats `results/eval/sft_grpo*`, courbes `logs/tensorboard/grpo_sft`).
 
 ## Diagnostic : pourquoi GRPO plafonne
 
@@ -154,7 +168,7 @@ Mesures tirées de TensorBoard (moyennes début = steps 5-25, fin = steps 408-44
        --save_total_limit 1 --report_to tensorboard
    ```
    `--min_pass 1` retire aussi les questions jamais réussies (0/8, également sans signal). Moins de questions = moins de steps par epoch : augmenter `--epochs` pour un budget comparable. Le filtre vieillit pendant l'entraînement (une question à 7/8 peut passer à 8/8) : on peut le recalculer entre deux epochs.
-   `scripts/run_filter_after_training.sh` a été lancé pour produire `data/pass_rates_sft.jsonl` et `data/pass_rates_base.jsonl` une fois le run SFT + GRPO terminé : vérifier `logs/filter_easy.log`.
+   Les taux de réussite du modèle SFT et du modèle de base sont en cours de calcul sur le serveur (`data/pass_rates_sft.jsonl`, `data/pass_rates_base.jsonl`, log `logs/filter_easy.log`), pas encore versionnés.
 2. **Plus de diversité** : 16 générations par prompt au lieu de 8, température plus haute, ou β > 0 (KL) pour freiner l'effondrement d'entropie.
 3. **Corriger la dilution** dans la loss (normaliser seulement sur les groupes à std > 0, en sous-classant `compute_loss`) ou implémenter le *dynamic sampling* de DAPO (absent de TRL 1.15).
 4. **Données plus dures** (MATH, variantes de GSM8K) : c'est là que du raisonnement long (`<think>`) aurait un intérêt.
