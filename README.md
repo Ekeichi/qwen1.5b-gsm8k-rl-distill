@@ -64,6 +64,7 @@ data/
   val_gsm8k.jsonl               300 questions de validation (tirées du train, exclues de l'entraînement)
   distill_data.jsonl            27 799 solutions correctes du professeur
   distill_data_smoketest.jsonl  petit échantillon du test rapide de gen_distill.py
+  pass_rates_{base,sft}.jsonl   nb de bonnes réponses sur 8 par question du train (filter_easy.py)
 results/
   summary.txt       tableau ci-dessus
   eval/<modèle>_greedy.jsonl, <modèle>_maj16.jsonl   prédictions détaillées par question
@@ -155,9 +156,33 @@ Mesures tirées de TensorBoard (moyennes début = steps 5-25, fin = steps 408-44
 - **Et ces groupes diluent le gradient des autres** : la loss par défaut (`loss_type="dapo"`) divise par le nombre total de tokens du batch, groupes nuls compris (`grpo_trainer.py:2424`, `3094-3099`). Avec 73 % de groupes nuls, le lr effectif tombe à ~0.27 × 1e-6.
 - L'entropie s'effondre et le maj@16 ne bouge pas : GRPO rend le modèle plus fiable sur des réponses qu'il savait déjà produire, plus qu'il n'ajoute de capacité.
 
+### Taux de réussite par question sur le train (`src/filter_easy.py`)
+
+7 173 questions du train GRPO, 8 tirages par question dans les conditions de l'entraînement (T = 1.0, 512 tokens, mêmes récompenses). Fichiers : `data/pass_rates_base.jsonl`, `data/pass_rates_sft.jsonl` ; log : `logs/filter_easy.log`.
+
+| bonnes réponses sur 8 | modèle de base | modèle SFT |
+|---|---:|---:|
+| 0/8 | 4.2 % | 2.2 % |
+| 1/8 | 4.6 % | 1.1 % |
+| 2/8 | 4.5 % | 1.7 % |
+| 3/8 | 5.4 % | 2.0 % |
+| 4/8 | 7.8 % | 2.7 % |
+| 5/8 | 9.4 % | 3.8 % |
+| 6/8 | 14.6 % | 6.3 % |
+| 7/8 | 22.6 % | 13.1 % |
+| **8/8** | **27.0 %** | **67.1 %** |
+| pass@1 moyen | 71.2 % | 88.3 % |
+| **groupes à variance nulle** | **28.2 %** | **68.4 %** |
+| questions gardées avec `--max_pass 7` | 5 236 | 2 359 |
+| questions gardées avec `--min_pass 1 --max_pass 7` | 4 938 | 2 199 |
+
+- Les 68.4 % du modèle SFT recoupent les ~70 % mesurés par TensorBoard au début du run SFT + GRPO : le script reproduit bien les conditions d'entraînement.
+- La distillation a rendu « trop faciles » 3 008 questions que le modèle de base ne réussissait pas à 8/8 : c'est pour ça que le GRPO sur le modèle distillé a si peu de signal.
+- Un GRPO filtré depuis le SFT tournerait sur un tiers du train : ~3× moins de steps par epoch, mais chaque batch porte du signal.
+
 ## Pistes pour la suite (non faites)
 
-1. **Filtrer hors ligne les questions trop faciles** (outillage prêt, pas encore entraîné) :
+1. **Filtrer hors ligne les questions trop faciles** (taux de réussite déjà calculés, voir ci-dessus ; pas encore entraîné) :
    ```bash
    # taux de réussite par question, mêmes conditions que l'entraînement (8 tirages, T = 1.0, 512 tokens) ~10 min
    python src/filter_easy.py --model outputs/sft_distill --out data/pass_rates_sft.jsonl
@@ -168,7 +193,7 @@ Mesures tirées de TensorBoard (moyennes début = steps 5-25, fin = steps 408-44
        --save_total_limit 1 --report_to tensorboard
    ```
    `--min_pass 1` retire aussi les questions jamais réussies (0/8, également sans signal). Moins de questions = moins de steps par epoch : augmenter `--epochs` pour un budget comparable. Le filtre vieillit pendant l'entraînement (une question à 7/8 peut passer à 8/8) : on peut le recalculer entre deux epochs.
-   Les taux de réussite du modèle SFT et du modèle de base sont en cours de calcul sur le serveur (`data/pass_rates_sft.jsonl`, `data/pass_rates_base.jsonl`, log `logs/filter_easy.log`), pas encore versionnés.
+   Les fichiers `data/pass_rates_sft.jsonl` et `data/pass_rates_base.jsonl` sont déjà dans le dépôt : la première commande est optionnelle.
 2. **Plus de diversité** : 16 générations par prompt au lieu de 8, température plus haute, ou β > 0 (KL) pour freiner l'effondrement d'entropie.
 3. **Corriger la dilution** dans la loss (normaliser seulement sur les groupes à std > 0, en sous-classant `compute_loss`) ou implémenter le *dynamic sampling* de DAPO (absent de TRL 1.15).
 4. **Données plus dures** (MATH, variantes de GSM8K) : c'est là que du raisonnement long (`<think>`) aurait un intérêt.
