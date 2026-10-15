@@ -11,6 +11,9 @@ GRPO a partir du modele distille (SFT) :
     VLLM_USE_FLASHINFER_SAMPLER=0 python src/train_grpo.py --model outputs/sft_distill --out outputs/grpo_sft \
         --logging_dir logs/tensorboard/grpo_sft --save_total_limit 1 --report_to tensorboard
 
+Sur les seules questions informatives (voir filter_easy.py) :
+    ... --pass_rates data/pass_rates_sft.jsonl --max_pass 7
+
 Evaluation d'un checkpoint ensuite :
     python src/eval_gsm8k.py --model outputs/grpo_gsm8k/final --out results/eval/final_greedy.jsonl
 """
@@ -142,6 +145,10 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--resume", default=None,
                     help="chemin d'un checkpoint COMPLET (avec optimizer.pt) pour reprendre l'entrainement")
+    ap.add_argument("--pass_rates", default=None,
+                    help="sortie de filter_easy.py : filtre les questions selon leur nb de bonnes reponses")
+    ap.add_argument("--min_pass", type=int, default=0, help="garde les questions avec n_correct >= min_pass")
+    ap.add_argument("--max_pass", type=int, default=None, help="garde les questions avec n_correct <= max_pass")
     ap.add_argument("--save_total_limit", type=int, default=3,
                     help="nb de checkpoints gardes (1 = ~12 Go de pic disque au lieu de ~24)")
     ap.add_argument("--save_only_model", type=int, default=1,
@@ -153,6 +160,14 @@ def main():
         raise SystemExit(f"{args.out}/final existe deja : choisis un autre --out pour ne pas l'ecraser")
 
     train_ds, val_ds = build_dataset(args.n_val)
+    if args.pass_rates:
+        rates = [json.loads(l) for l in open(args.pass_rates, encoding="utf-8")]
+        assert len(rates) == len(train_ds), "pass_rates ne correspond pas au train set (meme --n_val ?)"
+        hi = args.max_pass if args.max_pass is not None else max(r["n"] for r in rates)
+        keep = [r["idx"] for r in rates if args.min_pass <= r["n_correct"] <= hi]
+        print(f"filtrage : {len(keep)}/{len(train_ds)} questions gardees "
+              f"({args.min_pass} <= bonnes reponses <= {hi}, d'apres {args.pass_rates})")
+        train_ds = train_ds.select(keep)
     os.makedirs("data", exist_ok=True)
     with open("data/val_gsm8k.jsonl", "w", encoding="utf-8") as f:  # split de validation, tire du train
         for ex in val_ds:
